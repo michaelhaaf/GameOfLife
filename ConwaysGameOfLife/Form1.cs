@@ -48,7 +48,7 @@ namespace ConwaysGameOfLife
             pb.BackColor = colorTheme.GetBackground();
             
             game = new Game(new SolidBrush(colorTheme.GetForeground()), ROWS, COLUMNS, CELL_WIDTH);
-            game.InitialGeneration(new Random());
+            game.InitialGeneration();
             generationTimer.Start();
         }
 
@@ -115,7 +115,7 @@ namespace ConwaysGameOfLife
         private void Restart()
         {
             game = new Game(new SolidBrush(colorTheme.GetForeground()), ROWS, COLUMNS, CELL_WIDTH);
-            game.InitialGeneration(new Random());
+            game.InitialGeneration();
 
             grids = new List<bool[,]>();
             generationCounter = 0;

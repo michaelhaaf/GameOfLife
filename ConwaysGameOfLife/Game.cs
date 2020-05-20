@@ -23,25 +23,10 @@ namespace ConwaysGameOfLife
             myGrid = new bool[myRows, myColumns];
         }
 
-        /*
-         * *** To Implement
-         * 
-         * The InitialGeneration function uses a Random object to generate an initial play state for the game.
-         * 
-         * Expected Behavior:
-         * - after this function finishes running, 
-         */
-        public void InitialGeneration(Random randomGenerator) 
+
+        public void InitialGeneration() 
         {
-            for (int r = 0; r < myGrid.GetLength(0); r++)
-            {
-                for (int c = 0; c < myGrid.GetLength(1); c++)
-                {
-                    int randomNumber = randomGenerator.Next(8);
-                    if (randomNumber == 0)
-                        myGrid[r, c] = true;
-                }
-            }
+            myGrid = GameUtilities.GenerateRandomBoard(myRows, myColumns, new Random());
         }
 
         /*
@@ -49,59 +34,8 @@ namespace ConwaysGameOfLife
         */
         public void NewGeneration()
         {
-            bool[,] newGrid = new bool[myRows, myColumns];
-            for (int r = 0; r < myGrid.GetLength(0); r++)
-            {
-                for (int c = 0; c < myGrid.GetLength(1); c++)
-                {
-                    int count = CountNeighbours(r, c);
-
-                    if (myGrid[r, c])
-                    {
-                        if (count == 2 || count == 3)
-                            newGrid[r, c] = true;
-                        if (count < 2 || count > 3)
-                            newGrid[r, c] = false;
-                    }
-                    else
-                    {
-                        if (count == 3)
-                            newGrid[r, c] = true;
-                    }
-                }
-            }
-            myGrid = newGrid;
+            myGrid = GameUtilities.CalculateNextGeneration(myGrid);
         }
-
-
-        /*
-         * To implement
-         */
-        public int CountNeighbours(int row, int col)
-        {
-
-            int count = 0;
-
-            if ((row - 1 >= 0 && col - 1 > 0) && myGrid[row - 1, col - 1] == true)
-                count++;
-            if ((row - 1 >= 0) && myGrid[row - 1, col] == true)
-                count++;
-            if ((row - 1 >= 0 && col + 1 < myColumns) && myGrid[row - 1, col + 1] == true)
-                count++;
-            if ((col - 1 >= 0) && myGrid[row, col - 1] == true)
-                count++;
-            if ((col + 1 < myColumns) && myGrid[row, col + 1] == true)
-                count++;
-            if ((row + 1 < myRows && col - 1 >= 0) && myGrid[row + 1, col - 1] == true)
-                count++;
-            if ((row + 1 < myRows) && myGrid[row + 1, col] == true)
-                count++;
-            if ((row + 1 < myRows && col + 1 < myColumns) && myGrid[row + 1, col + 1] == true)
-                count++;
-
-            return count;
-        }
-
 
 
         public void Paint(Graphics g)
@@ -121,21 +55,6 @@ namespace ConwaysGameOfLife
         public bool[,] GetGrid()
         {
             return myGrid;
-        }
-
-        public bool Equals(bool[,] g)
-        {
-            for (int r = 0; r < myGrid.GetUpperBound(0); r++)
-            {
-                for (int c = 0; c < myGrid.GetUpperBound(1); c++)
-                {
-                    if (myGrid[r, c] != g[r, c])
-                    {
-                        return false;
-                    }
-                }
-            }
-            return true;
         }
 
         public void SetCellColor(Color c)
