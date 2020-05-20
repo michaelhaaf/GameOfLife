@@ -18,3 +18,14 @@ C:\Users\c09886\Downloads\ConwaysGameOfLife\ConwaysGameOfLife\obj\Debug\ConwaysG
 C:\Users\c09886\Downloads\ConwaysGameOfLife\ConwaysGameOfLife\obj\Debug\ConwaysGameOfLife.Introduction.resources
 C:\Users\c09886\Downloads\ConwaysGameOfLife\ConwaysGameOfLife\obj\Debug\ConwaysGameOfLife.Properties.Resources.resources
 C:\Users\c09886\Downloads\ConwaysGameOfLife\ConwaysGameOfLife\obj\Debug\ConwaysGameOfLife.csproj.GenerateResource.Cache
+D:\Documents\GitHub\GameOfLife\ConwaysGameOfLife\obj\Debug\ConwaysGameOfLife.csprojAssemblyReference.cache
+D:\Documents\GitHub\GameOfLife\ConwaysGameOfLife\obj\Debug\ConwaysGameOfLife.Form1.resources
+D:\Documents\GitHub\GameOfLife\ConwaysGameOfLife\obj\Debug\ConwaysGameOfLife.Introduction.resources
+D:\Documents\GitHub\GameOfLife\ConwaysGameOfLife\obj\Debug\ConwaysGameOfLife.Properties.Resources.resources
+D:\Documents\GitHub\GameOfLife\ConwaysGameOfLife\obj\Debug\ConwaysGameOfLife.csproj.GenerateResource.cache
+D:\Documents\GitHub\GameOfLife\ConwaysGameOfLife\obj\Debug\ConwaysGameOfLife.csproj.CoreCompileInputs.cache
+D:\Documents\GitHub\GameOfLife\ConwaysGameOfLife\obj\Debug\ConwaysGameOfLife.exe
+D:\Documents\GitHub\GameOfLife\ConwaysGameOfLife\obj\Debug\ConwaysGameOfLife.pdb
+D:\Documents\GitHub\GameOfLife\ConwaysGameOfLife\bin\Debug\ConwaysGameOfLife.exe.config
+D:\Documents\GitHub\GameOfLife\ConwaysGameOfLife\bin\Debug\ConwaysGameOfLife.exe
+D:\Documents\GitHub\GameOfLife\ConwaysGameOfLife\bin\Debug\ConwaysGameOfLife.pdb

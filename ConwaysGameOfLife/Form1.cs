@@ -15,22 +15,24 @@ namespace ConwaysGameOfLife
     public partial class Form1 : Form
     {
         #region Vars
+
         private ColorTheme DEFAULT = new ColorTheme(Color.Cyan, Color.FromArgb(34, 34, 34));
         private ColorTheme DARK = new ColorTheme(Color.FromArgb(186, 186, 186), Color.FromArgb(10, 10, 10));
         private ColorTheme LIGHT = new ColorTheme(Color.Cyan, Color.White);
         private ColorTheme TERMINAL = new ColorTheme(Color.FromArgb(0, 225, 0), Color.Black);
+        private ColorTheme colorTheme;
 
-        private ColorTheme current;
-
-        private Game cgol;
+        private Game game;
         private Brush CELL_COLOR = Brushes.Cyan;
+
         private const int ROWS = 100;
         private const int COLUMNS = 100;
         private const int CELL_WIDTH = 6;
-        public int generation;
+
+        public int generationCounter = 0;
         private bool pauseStatus = false;
         private List<bool[,]> grids = new List<bool[,]>();
-        private bool autoplay = false;
+
         #endregion
 
         public Form1()
@@ -42,52 +44,40 @@ namespace ConwaysGameOfLife
         {
             Introduction introForm = new Introduction();
             introForm.ShowDialog();
-            current = DEFAULT;
-            pb.BackColor = current.GetBackground();
-            cgol = new Game(new SolidBrush(current.GetForeground()), ROWS, COLUMNS, CELL_WIDTH);
-            generation = 0;
+            colorTheme = DEFAULT;
+            pb.BackColor = colorTheme.GetBackground();
+            
+            game = new Game(new SolidBrush(colorTheme.GetForeground()), ROWS, COLUMNS, CELL_WIDTH);
+            game.InitialGeneration(new Random());
             generationTimer.Start();
         }
 
         private void generationTimer_Tick(object sender, EventArgs e)
         {
-            // attempting to add in code that auto-terminates a game that can no longer go on.
-            grids.Add((bool[,])cgol.GetGrid().Clone());
-            if (grids.Count >= 7 && cgol.Equals(grids[grids.Count - 7]) || grids.Count >= 3 && cgol.Equals(grids[grids.Count - 3]))
-            {
-                if (!autoplay)
-                {
-                    Pause();
-                    MessageBox.Show("The game can go on no longer. Restarting...", "Game over!", MessageBoxButtons.OK);
-                }
-                Restart();
-            }
-            else
-            {
-                generation++;
-                cgol.NewGeneration();
-                lblGen.Text = generation.ToString();
-                Refresh();
-            }
+            grids.Add((bool[,])game.GetGrid().Clone());
+            game.NewGeneration();
+
+            generationCounter++;
+            lblGen.Text = generationCounter.ToString();
+            Refresh();   
         }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
-            cgol.Paint(e.Graphics);
+            game.Paint(e.Graphics);
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            
+        private void restartButton_Click(object sender, EventArgs e)
+        { 
             Restart();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void exitButton_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
-        private void btnPause_Click(object sender, EventArgs e)
+        private void pauseButton_Click(object sender, EventArgs e)
         {
             Pause();
         }
@@ -122,20 +112,14 @@ namespace ConwaysGameOfLife
             generationTimer.Interval = 1000 / 64;
         }
 
-        public int Generation
-        {
-            get
-            {
-                return generation;
-            }
-        }
-
         private void Restart()
         {
-            cgol = new Game(new SolidBrush(current.GetForeground()), ROWS, COLUMNS, CELL_WIDTH);
+            game = new Game(new SolidBrush(colorTheme.GetForeground()), ROWS, COLUMNS, CELL_WIDTH);
+            game.InitialGeneration(new Random());
+
             grids = new List<bool[,]>();
-            generation = 0;
-            btnPause.Text = "Pause";
+            generationCounter = 0;
+            pauseButton.Text = "Pause";
             pauseStatus = false;
             generationTimer.Start();
             Refresh();
@@ -148,43 +132,38 @@ namespace ConwaysGameOfLife
             if (pauseStatus)
             {
                 generationTimer.Stop();
-                btnPause.Text = "Play";
+                pauseButton.Text = "Play";
             }
             else
             {
                 generationTimer.Start();
-                btnPause.Text = "Pause";
+                pauseButton.Text = "Pause";
             }
-        }
-
-        private void cbAuto_CheckedChanged(object sender, EventArgs e)
-        {
-            autoplay = cbAuto.Checked;
         }
 
         private void darkToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            current = DARK;
+            colorTheme = DARK;
             ChangeTheme();
             Refresh();
         }
 
         private void lightToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            current = LIGHT;
+            colorTheme = LIGHT;
             ChangeTheme();
             Refresh();
         }
 
         private void ChangeTheme()
         {
-            cgol.SetCellColor(current.GetForeground());
-            pb.BackColor = current.GetBackground();
+            game.SetCellColor(colorTheme.GetForeground());
+            pb.BackColor = colorTheme.GetBackground();
         }
 
         private void terminalToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            current = TERMINAL;
+            colorTheme = TERMINAL;
             ChangeTheme();
             Refresh();
         }

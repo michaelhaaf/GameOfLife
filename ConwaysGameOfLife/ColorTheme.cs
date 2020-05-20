@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace ConwaysGameOfLife
 {
-    class ColorTheme
+    public class ColorTheme
     {
         private Color myForeground;
         private Color myBackground;

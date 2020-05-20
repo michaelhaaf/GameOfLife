@@ -8,7 +8,7 @@ using System.Drawing;
 
 namespace ConwaysGameOfLife
 {
-    class Game
+    public class Game
     {
         private bool[,] myGrid;
         private int myRows, myColumns, myCellWidth;
@@ -20,11 +20,19 @@ namespace ConwaysGameOfLife
             myRows = rows;
             myColumns = columns;
             myCellWidth = cellWidth;
-
             myGrid = new bool[myRows, myColumns];
+        }
 
-
-            Random randomGenerator = new Random();
+        /*
+         * *** To Implement
+         * 
+         * The InitialGeneration function uses a Random object to generate an initial play state for the game.
+         * 
+         * Expected Behavior:
+         * - after this function finishes running, 
+         */
+        public void InitialGeneration(Random randomGenerator) 
+        {
             for (int r = 0; r < myGrid.GetLength(0); r++)
             {
                 for (int c = 0; c < myGrid.GetLength(1); c++)
@@ -36,12 +44,45 @@ namespace ConwaysGameOfLife
             }
         }
 
-        private int CheckStatus(int row, int col)
+        /*
+        * to implement
+        */
+        public void NewGeneration()
+        {
+            bool[,] newGrid = new bool[myRows, myColumns];
+            for (int r = 0; r < myGrid.GetLength(0); r++)
+            {
+                for (int c = 0; c < myGrid.GetLength(1); c++)
+                {
+                    int count = CountNeighbours(r, c);
+
+                    if (myGrid[r, c])
+                    {
+                        if (count == 2 || count == 3)
+                            newGrid[r, c] = true;
+                        if (count < 2 || count > 3)
+                            newGrid[r, c] = false;
+                    }
+                    else
+                    {
+                        if (count == 3)
+                            newGrid[r, c] = true;
+                    }
+                }
+            }
+            myGrid = newGrid;
+        }
+
+
+        /*
+         * To implement
+         */
+        public int CountNeighbours(int row, int col)
         {
 
             int count = 0;
 
-            if ((row - 1 >= 0 && col - 1 > 0)&&myGrid[row - 1, col - 1] == true)
+            if ((row - 1 >= 0 && col - 1 > 0) && myGrid[row - 1, col - 1] == true)
                 count++;
             if ((row - 1 >= 0) && myGrid[row - 1, col] == true)
                 count++;
@@ -61,34 +102,7 @@ namespace ConwaysGameOfLife
             return count;
         }
 
-        public void NewGeneration()
-        {
-            Form1 temp = new Form1();
-            
-            bool[,] newGrid = new bool[myRows, myColumns];
-            for (int r = 0; r < myGrid.GetLength(0); r++)
-            {
-                for (int c = 0; c < myGrid.GetLength(1); c++)
-                {
-                    int count = CheckStatus(r, c);
-                    
 
-                    if (myGrid[r, c])
-                    {
-                        if (count == 2 || count == 3)
-                            newGrid[r, c] = true;
-                        if (count < 2 || count > 3)
-                            newGrid[r, c] = false;
-                    }
-                    else
-                    {
-                        if (count == 3)
-                            newGrid[r, c] = true;
-                    }
-                }
-            }
-            myGrid = newGrid;
-        }
 
         public void Paint(Graphics g)
         {
@@ -96,8 +110,10 @@ namespace ConwaysGameOfLife
             {
                 for (int c = 0; c < myGrid.GetLength(1); c++)
                 {
-                    if (myGrid[r,c])
+                    if (myGrid[r, c])
+                    {
                         g.FillRectangle(myCellColor, c * myCellWidth, r * myCellWidth, myCellWidth, myCellWidth);
+                    }
                 }
             }
         }
@@ -110,9 +126,15 @@ namespace ConwaysGameOfLife
         public bool Equals(bool[,] g)
         {
             for (int r = 0; r < myGrid.GetUpperBound(0); r++)
+            {
                 for (int c = 0; c < myGrid.GetUpperBound(1); c++)
+                {
                     if (myGrid[r, c] != g[r, c])
+                    {
                         return false;
+                    }
+                }
+            }
             return true;
         }
 
